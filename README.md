@@ -26,6 +26,96 @@ DataSipper is a custom web browser based on Chromium that features comprehensive
 **Automated Checkpoints**: Every hour for recovery  
 **Estimated Completion**: 3-7 hours total build time
 
+## 🤖 **AI Session Quick Reference: Monitoring & Automation Tools**
+
+> **For AI assistants**: These tools are ready to use immediately to monitor builds, manage state, and automate processes.
+
+### **🔍 Build Monitoring Tools**
+```bash
+# Quick build status check
+./scripts/monitor-build.sh status
+
+# Continuous monitoring (background) - checks every 30 min for 12 cycles
+./scripts/monitor-build.sh monitor 1800 12
+
+# Check ninja process and capture output safely
+./scripts/ninja-output-capture.sh capture
+./scripts/ninja-output-capture.sh check
+
+# View monitoring logs
+tail -f build-logs/continuous-monitor.log
+```
+
+### **💾 Checkpoint & Recovery System**
+```bash
+# Create checkpoint of current build state
+./scripts/checkpoint-build.sh auto
+
+# List all available checkpoints
+./scripts/checkpoint-build.sh list
+
+# Show detailed checkpoint info
+./scripts/checkpoint-build.sh show auto_20250702_063830
+
+# Automatic checkpoints every hour for 8 hours (background)
+./scripts/checkpoint-build.sh monitor 3600 8
+
+# View checkpoint history
+./scripts/checkpoint-build.sh log
+```
+
+### **🤖 Auto-Commit System**
+```bash
+# Monitor ninja build and auto-commit when complete
+./scripts/auto-commit-build.sh monitor
+
+# Manual commit of current build state
+./scripts/auto-commit-build.sh commit
+
+# Check auto-commit monitor logs
+tail -f build-logs/auto-commit-monitor.log
+```
+
+### **📊 Quick Status Commands**
+```bash
+# Check if ninja is still running
+ps aux | grep ninja | grep -v grep
+
+# Get current build size and object count
+du -sh src/out/Lightning && find src/out/Lightning -name "*.o" | wc -l
+
+# Check for Chrome binary
+ls -lh src/out/Lightning/chrome 2>/dev/null || echo "Chrome binary not yet created"
+
+# View latest ninja progress
+tail -20 build-logs/ninja-progress.log
+```
+
+### **🛠️ Build Management**
+```bash
+# Resume/start build if stopped
+cd src && ninja -C out/Lightning chrome
+
+# Quick incremental build (after full build succeeds)
+./scripts/quick-build.sh
+
+# Staged build system with recovery
+./scripts/staged-build-system.sh --resume
+```
+
+### **📁 Key File Locations**
+- **Build logs**: `build-logs/` - All monitoring and progress logs
+- **Checkpoints**: `.checkpoints/` - Build state snapshots for recovery  
+- **Chrome binary**: `src/out/Lightning/chrome` (when build completes)
+- **DataSipper binary**: `datasipper-chrome` (copied to project root when done)
+- **Build state**: `build-logs/ninja.pid`, `build-logs/ninja-progress.log`
+
+### **🚨 Current Background Processes**
+When monitoring, these processes run automatically:
+- **Build monitor**: Checks every 30 minutes, logs to `build-logs/continuous-monitor.log`
+- **Checkpoint system**: Creates hourly snapshots
+- **Auto-commit**: Watches for build completion and commits results
+
 ## 🚀 Quick Start
 
 ### **Option 1: Development Mode (Recommended)**
@@ -196,6 +286,8 @@ datasipper/                              # Production-ready codebase
 ├── scripts/                             # Production build system
 │   ├── monitor-build.sh                 # Real-time monitoring ✅
 │   ├── checkpoint-build.sh              # State management ✅
+│   ├── ninja-output-capture.sh          # Safe ninja monitoring ✅
+│   ├── auto-commit-build.sh             # Auto git commits ✅
 │   ├── staged-build-system.sh           # 8-stage pipeline ✅
 │   ├── quick-build.sh                   # Incremental builds ✅
 │   └── ci-build.sh                      # CI/CD integration ✅
@@ -208,9 +300,11 @@ datasipper/                              # Production-ready codebase
 ├── build-logs/                          # Comprehensive logging
 │   ├── continuous-monitor.log           # Build progress ✅
 │   ├── checkpoint.log                   # State changes ✅
-│   └── stage-*.log                      # Per-stage logs ✅
+│   ├── ninja-progress.log               # Live ninja output ✅
+│   └── auto-commit-monitor.log          # Auto-commit activity ✅
 ├── .checkpoints/                        # Recovery checkpoints
 │   └── auto_20250702_063830/            # Latest checkpoint ✅
+├── datasipper-chrome                    # Ready-to-run binary (when complete)
 └── docs/                                # Production documentation
     ├── CHROMIUM_BUILD_STRATEGY.md       # Build analysis ✅
     ├── BUILD_TEST_RESULTS.md            # Test results ✅
