@@ -292,7 +292,7 @@ stage_06_initial_build() {
         cd '$PROJECT_ROOT'
         
         # Build core components first
-        cd chromium-src
+        cd src
         
         # Build base libraries and core components
         ninja -C out/Lightning \\
@@ -319,7 +319,7 @@ stage_07_chrome_build() {
     
     log_info "=== Stage 7: Build Chrome Binary ==="
     run_with_timeout 4800 "$stage_name" bash -c "
-        cd '$PROJECT_ROOT/chromium-src'
+        cd '$PROJECT_ROOT/src'
         
         # Use optimized build script if available
         if [[ -f ../scripts/build-chrome-optimized.sh ]]; then
@@ -349,7 +349,7 @@ stage_08_test_build() {
     
     log_info "=== Stage 8: Test and Validate Build ==="
     run_with_timeout 600 "$stage_name" bash -c "
-        cd '$PROJECT_ROOT/chromium-src'
+        cd '$PROJECT_ROOT/src'
         
         # Basic functionality test
         ./out/Lightning/chrome --version
