@@ -2,7 +2,7 @@
 # Script for managing DataSipper patches against Chromium source.
 # Based on the comprehensive DataSipper development plan
 
-CHROMIUM_SRC_DIR="/workspace/chromium-src/src"
+CHROMIUM_SRC_DIR="/workspace/src"
 PATCHES_DIR="/workspace/patches"
 SERIES_FILE="$PATCHES_DIR/series"
 CHROMIUM_TAG_VALUE=$(grep CHROMIUM_TAG /workspace/CHROMIUM_VERSION.txt | cut -d= -f2)
