@@ -1,0 +1,15 @@
+upstream-fixes/build-system-fixes.patch
+upstream-fixes/network-stack-compatibility.patch
+core/datasipper/base-infrastructure.patch
+core/datasipper/database-schema.patch
+core/datasipper/data-storage-service.patch
+core/datasipper/memory-data-structures.patch
+core/datasipper/stream-selection-system.patch
+core/datasipper/transformation-engine.patch
+core/network-interception/url-loader-interceptor.patch
+core/network-interception/websocket-interceptor.patch
+core/network-interception/datasipper-network-observer.patch
+core/network-interception/data-storage-integration.patch
+core/ui-panel/browser-ui-integration.patch
+core/ui-panel/datasipper-javascript-complete.patch
+core/ui-panel/datasipper-webui-resources.patch
