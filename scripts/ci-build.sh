@@ -187,18 +187,18 @@ fetch_chromium_ci() {
     git config --global init.defaultBranch main
     
     # Fetch Chromium (shallow clone for CI)
-    if [[ ! -d chromium-src ]]; then
+    if [[ ! -d src ]]; then
         log_info "Fetching Chromium source..."
         fetch --nohooks chromium
         
-        cd chromium-src
+        cd src
         git checkout main
         
         # Minimal sync for CI (no history)
         gclient sync --nohooks --shallow --no-history
     else
         log_info "Chromium source already exists"
-        cd chromium-src
+        cd src
         gclient sync --nohooks
     fi
     
@@ -235,7 +235,7 @@ apply_patches_ci() {
 configure_build_ci() {
     log_info "Configuring build for CI..."
     
-    cd "$PROJECT_ROOT/chromium-src"
+    cd "$PROJECT_ROOT/src"
     mkdir -p out/CI
     
     # Generate CI build configuration
@@ -254,7 +254,7 @@ EOF
 build_core_components_ci() {
     log_info "Building core components..."
     
-    cd "$PROJECT_ROOT/chromium-src"
+    cd "$PROJECT_ROOT/src"
     
     # Build essential components first (faster feedback)
     local core_targets=(
@@ -280,7 +280,7 @@ build_core_components_ci() {
 run_ci_tests() {
     log_info "Running CI tests..."
     
-    cd "$PROJECT_ROOT/chromium-src"
+    cd "$PROJECT_ROOT/src"
     
     # Build test binary if it doesn't exist
     if [[ ! -f out/CI/chrome ]]; then
@@ -323,16 +323,16 @@ generate_ci_artifacts() {
     cp -r "$LOG_DIR"/* "$artifacts_dir/" 2>/dev/null || true
     
     # Binary information
-    if [[ -f "$PROJECT_ROOT/chromium-src/out/CI/chrome" ]]; then
-        cd "$PROJECT_ROOT/chromium-src"
+    if [[ -f "$PROJECT_ROOT/src/out/CI/chrome" ]]; then
+        cd "$PROJECT_ROOT/src"
         ls -lh out/CI/chrome > "$artifacts_dir/binary-info.txt"
         ldd out/CI/chrome > "$artifacts_dir/dependencies.txt" 2>&1 || true
         file out/CI/chrome > "$artifacts_dir/binary-type.txt"
     fi
     
     # Build configuration
-    if [[ -f "$PROJECT_ROOT/chromium-src/out/CI/args.gn" ]]; then
-        cp "$PROJECT_ROOT/chromium-src/out/CI/args.gn" "$artifacts_dir/"
+    if [[ -f "$PROJECT_ROOT/src/out/CI/args.gn" ]]; then
+        cp "$PROJECT_ROOT/src/out/CI/args.gn" "$artifacts_dir/"
     fi
     
     # System information

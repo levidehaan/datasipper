@@ -149,9 +149,9 @@ check_status() {
     fi
     
     # Check if Chrome binary exists
-    if [[ -f chromium-src/out/Lightning/chrome ]]; then
+    if [[ -f src/out/Lightning/chrome ]]; then
         success "Chrome binary found:"
-        ls -lh chromium-src/out/Lightning/chrome
+        ls -lh src/out/Lightning/chrome
     else
         warning "Chrome binary not found"
     fi

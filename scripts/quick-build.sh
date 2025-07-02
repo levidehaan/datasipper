@@ -31,7 +31,7 @@ success() {
 # Quick build targets
 quick_build_chrome() {
     log "Starting quick Chrome build..."
-    cd "$PROJECT_ROOT/chromium-src"
+    cd "$PROJECT_ROOT/src"
     
     # Check if main build exists
     if [[ ! -f "out/Lightning/chrome" ]]; then
@@ -55,7 +55,7 @@ quick_build_chrome() {
 
 quick_build_datasipper() {
     log "Building DataSipper components only..."
-    cd "$PROJECT_ROOT/chromium-src"
+    cd "$PROJECT_ROOT/src"
     
     # Build only DataSipper-related targets
     ninja -C out/Lightning \
@@ -69,7 +69,7 @@ quick_build_datasipper() {
 
 quick_build_test() {
     log "Building test components..."
-    cd "$PROJECT_ROOT/chromium-src"
+    cd "$PROJECT_ROOT/src"
     
     ninja -C out/Lightning \
         browser_tests \
@@ -95,7 +95,7 @@ quick_patch_and_build() {
 
 run_quick_test() {
     log "Running quick functionality test..."
-    cd "$PROJECT_ROOT/chromium-src"
+    cd "$PROJECT_ROOT/src"
     
     if [[ ! -f "out/Lightning/chrome" ]]; then
         error "Chrome binary not found"
@@ -119,7 +119,7 @@ run_quick_test() {
 # Clean incremental artifacts
 clean_incremental() {
     log "Cleaning incremental build artifacts..."
-    cd "$PROJECT_ROOT/chromium-src"
+    cd "$PROJECT_ROOT/src"
     
     # Remove object files but keep main binaries
     find out/Lightning -name "*.o" -delete 2>/dev/null || true
