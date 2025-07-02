@@ -1,0 +1,10 @@
+total 20
+drwxr-xr-x  5 ubuntu ubuntu  136 Jul  1 20:15 .
+drwxr-xr-x 20 ubuntu ubuntu 4096 Jul  2 07:35 ..
+drwxr-xr-x  5 ubuntu ubuntu   68 Jul  1 20:38 core
+drwxr-xr-x  3 ubuntu ubuntu   35 Jul  1 07:57 extra
+-rw-r--r--  1 ubuntu ubuntu 1527 Jul  1 20:15 series
+-rw-r--r--  1 ubuntu ubuntu 1373 Jul  1 20:15 series.backup
+-rw-r--r--  1 ubuntu ubuntu  732 Jul  1 20:15 series-corrected
+-rw-r--r--  1 ubuntu ubuntu 1527 Jul  1 20:15 series.corrected
+drwxr-xr-x  2 ubuntu ubuntu  121 Jul  1 20:15 upstream-fixes
